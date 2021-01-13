@@ -23,17 +23,17 @@ Note that there are three examples available :_**
 ##### Web server only
 
 ```
- deno run --allow-net --allow-read --allow-write --allow-plugin --unstable ./webserver/webserv.ts
+ deno run --allow-net --allow-read --allow-plugin --unstable --watch ./webserver/webserv.ts
 ```
 
 ##### Web server with a local instance of mongo DB
 
 ```
- deno run --allow-net --allow-read  --allow-plugin --allow-env --unstable ./webserver/webserv_localmongo.ts
+ deno run --allow-net --allow-read  --allow-plugin --allow-env --unstable --watch ./webserver/mongo/webserv_localmongo.ts
 ```
 
 ##### Web server with a cloud instance of mongo DB
 
 ```
- deno run --allow-net --allow-read --allow-plugin --allow-env --watch  --unstable ./webserver/webserv_mongocloud.ts
+ deno run --allow-net --allow-read --allow-plugin --allow-env --unstable --watch ./webserver/mongo/webserv_mongocloud.ts
 ```
