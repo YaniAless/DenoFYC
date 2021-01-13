@@ -1,4 +1,4 @@
-users.json
-greetings.txt
+/fs/users.json
+/fs/txtfiles/greetings.txt
 
 .deno_plugins/
