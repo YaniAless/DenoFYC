@@ -22,7 +22,7 @@ app.use(router.allowedMethods());
 app.use(async (ctx) => {
     const result = ctx.request.body({ contentTypes: { json: ['form-data'] } });
     await send(ctx, ctx.request.url.pathname, {
-        root: `${Deno.cwd()}/webserver/public`,
+        root: `${Deno.cwd()}/webserver/mongo/public`,
         index: "index.html",
     });
 });
@@ -35,7 +35,7 @@ interface UserSchema{
     level: number,
 }
 
-router.get('/', (ctx) => {
+router.get('/', async (ctx: RouterContext) => {
     ctx.response.redirect('/index.html');
 })
 
