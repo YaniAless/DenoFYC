@@ -14,3 +14,26 @@ If you want to start the filesystem example use that command in your CLI (Comman
 ```
  deno run --unstable --allow-net --allow-read --allow-write fs/filesystem.ts
 ```
+
+#### Web Server
+
+**_If you want to start the web server examples use these command in your CLI (Command Line Interface)
+Note that there are three examples available :_**
+
+##### Web server only
+
+```
+ deno run --allow-net --allow-read --allow-write --allow-plugin --unstable ./webserver/webserv.ts
+```
+
+##### Web server with a local instance of mongo DB
+
+```
+ deno run --allow-net --allow-read  --allow-plugin --allow-env --unstable ./webserver/webserv_localmongo.ts
+```
+
+##### Web server with a cloud instance of mongo DB
+
+```
+ deno run --allow-net --allow-read --allow-plugin --allow-env --watch  --unstable ./webserver/webserv_mongocloud.ts
+```
