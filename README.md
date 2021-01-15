@@ -8,6 +8,14 @@ It's aiming at beginner/intermediate developers.
 
 ### Examples
 
+#### Fetch data
+
+
+If you want to start the filesystem example use that command in your CLI (Command Line Interface) :
+```
+deno run --allow-net fetch/fetch.ts
+```
+
 #### Filesystem
 
 If you want to start the filesystem example use that command in your CLI (Command Line Interface) :
