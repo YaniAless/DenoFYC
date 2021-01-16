@@ -19,7 +19,7 @@ app.use(async (ctx) => {
     });
 });
 
-// Objet UserShema qui corresponds à la TABLE "users" dans la BDD
+// L'objet UserShema qui corresponds à la TABLE "users" dans la BDD
 // Cela nous permet d'ajouter facilement des informations en base
 interface UserSchema{
     _id: { $oid: string }
