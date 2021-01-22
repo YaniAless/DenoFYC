@@ -1,4 +1,4 @@
-export {} // Cette ligne est présente pour signifié que ce n'est pas un script, elle ne fait rien et ne nous sert à rien
+export {} // Cette ligne est présente pour signifier que ce n'est pas un script
 
 const host = "https://pokeapi.co/api/v2/pokemon/"
 const pokemonId = 100
