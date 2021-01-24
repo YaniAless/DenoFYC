@@ -19,7 +19,7 @@ app.use(async (ctx) => {
     });
 });
 
-// L'objet UserShema qui corresponds à la TABLE "users" dans la BDD
+// UserShema est un DAO (Data Access Object) et corresponds à la 'table' USERS dans la BDD
 // Cela nous permet d'ajouter facilement des informations en base
 interface UserSchema{
     _id: { $oid: string }
