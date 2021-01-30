@@ -2,12 +2,12 @@ import {
   Application,
   Router,
   send,
-} from "https://deno.land/x/oak@v6.0.0/mod.ts";
+} from "https://deno.land/x/oak@v6.2.0/mod.ts";
 import {
   viewEngine,
   engineFactory,
   adapterFactory,
-} from "https://deno.land/x/view_engine@v1.3.0/mod.ts";
+} from "https://deno.land/x/view_engine@v1.4.5/mod.ts";
 
 const app = new Application();
 const router = new Router();
