@@ -63,6 +63,40 @@ router.get("/beautiful-page", (ctx) => {
   ctx.render("web/index.ejs", { data: { msg: "An amazing website" } });
 });
 
+const path = "https://pokeapi.co/api/v2/pokemon?limit=10";
+const pokeId_1 = Math.floor(Math.random() * 10) + 1;
+const pokeId_2 = Math.floor(Math.random() * 10) + 1;
+
+//On affiche une liste des 10 premiers pokémons avec la méthode fetch
+// on affiche le json dans la console
+router.get('/pokemons', async (ctx) => {
+    let response = await fetch(`${path}`);
+    let json = await response.json();
+    console.log(json);
+    //on va maintenant chercher 1 attaque parmi 2 pokémons au hasard de la liste, on les récupère grâce à l'url du premier call
+    //on affiche donc le nom du pokemon et l'attaque qu'il utilise
+    //Pokemon 1 :
+    const pokemonName_1 = json.results[pokeId_1].name;
+    const pokemonUrl_1 = json.results[pokeId_1].url;
+    const pokemon_1 = await fetch(`${pokemonUrl_1}`);
+    let pokemonJson_1 = await pokemon_1.json();
+    const ability_1 = pokemonJson_1.abilities[1].ability.name;
+    console.log("Le pokemon " + pokemonName_1 + " utilise " + ability_1);
+
+    //Pokemon 2 :
+    const pokemonName_2 = json.results[pokeId_2].name;
+    const pokemonUrl_2 = json.results[pokeId_2].url;
+    const pokemon_2 = await fetch(`${pokemonUrl_2}`);
+    let pokemonJson_2 = await pokemon_2.json();
+    const ability_2 = pokemonJson_2.abilities[1].ability.name;
+    console.log("Le pokemon " + pokemonName_2 + " utilise " + ability_2);
+    ctx.render("web/index.ejs",
+    {
+      pokemon_1: {name: pokemonName_1, ability: ability_1},
+      pokemon_2: {name: pokemonName_2, ability: ability_2}
+    });
+})
+
 app.use(router.routes());
 app.use(router.allowedMethods());
 
