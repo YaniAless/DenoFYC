@@ -9,7 +9,7 @@ const app = new Application();
 const client = new MongoClient();
 client.connectWithUri('mongodb://localhost:27017');
 
-const db = client.database('testApp');
+const db = client.database('pokemon');
 const users = db.collection<UserSchema>('users');
 
 app.use(router.routes());
