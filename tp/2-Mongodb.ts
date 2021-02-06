@@ -156,6 +156,18 @@ router.post('/addPokemon', async (ctx: RouterContext) => {
 
 })
 
+router.get('/pokedex/:name', async (ctx: RouterContext) => {
+
+    console.log(ctx.params.name)
+    const user = await users.findOne({ username : ctx.params.name})
+
+    if(user != null) {
+        
+        ctx.response.type = "application/json";
+        ctx.response.body = user.pokedex
+    }    
+})
+
 console.log(`Listening on port ${PORT}`)
 await app.listen( { port: PORT });
 
