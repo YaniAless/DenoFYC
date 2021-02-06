@@ -37,11 +37,11 @@ Note that there are three examples available :_**
 ##### Web server with a local instance of mongo DB
 
 ```
- deno run --allow-net --allow-read  --allow-plugin --allow-env --unstable --watch ./webserver/mongo/webserv_localmongo.ts
+ deno run --allow-net --allow-read --allow-write --allow-plugin --allow-env --unstable --watch ./webserver/mongo/webserv_localmongo.ts
 ```
 
 ##### Web server with a cloud instance of mongo DB
 
 ```
- deno run --allow-net --allow-read --allow-plugin --allow-env --unstable --watch ./webserver/mongo/webserv_mongocloud.ts
+ deno run --allow-net --allow-read --allow-write --allow-plugin --allow-env --unstable --watch ./webserver/mongo/webserv_mongocloud.ts
 ```
