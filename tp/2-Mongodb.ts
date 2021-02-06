@@ -1,4 +1,5 @@
 import { Application, Router, RouterContext, send } from "https://deno.land/x/oak/mod.ts";
+//importation du package MongoClient
 import { MongoClient } from "https://deno.land/x/mongo@v0.13.0/mod.ts";
 
 const PORT = 4000;
@@ -11,6 +12,7 @@ client.connectWithUri('mongodb://localhost:27017');
 
 const db = client.database('pokemon');
 const users = db.collection<UserSchema>('users');
+const pokemons = db.collection<Pokemon>('pokemons');
 
 app.use(router.routes());
 app.use(router.allowedMethods());
@@ -31,8 +33,8 @@ app.use(async (ctx) => {
 // Cela nous permet d'ajouter facilement des informations en base
 interface UserSchema {
     _id: { $oid: string }
-    nickname: string,
-    level: number,
+    username: string,
+    pokedex: [Pokemon],
 }
 
 interface Pokemon {
@@ -56,20 +58,6 @@ router.get('/users', async (ctx: RouterContext) => {
     ctx.response.type = "application/json";
     ctx.response.headers.append('OKKK', "OKKKKK");
     ctx.response.body = user;
-})
-
-router.post('/users', async (ctx: RouterContext) => {
-    const body = await ctx.request.body().value;
-
-    const newUser = {
-        nickname: body.get('nickname'),
-        level: body.get('level'),
-    }
-
-    const insertUser = await users.insertOne(newUser);
-    console.log(insertUser);
-    ctx.response.headers.append('uid', insertUser['$oid']);
-    ctx.response.redirect('/');
 })
 
 const path = "https://pokeapi.co/api/v2/pokemon?limit=10"; 
@@ -110,7 +98,7 @@ router.get('/pokemon', async (ctx: RouterContext) => {
     let response = await fetch(`${urlPokemon}${randomPokemonId}`);
     
     let json = await response.json();
-    console.log(json);
+    //console.log(json);
 
     let pokemon: Pokemon = {
         _id: json["id"],
@@ -123,6 +111,48 @@ router.get('/pokemon', async (ctx: RouterContext) => {
 
     ctx.response.type = "application/json";
     ctx.response.body = pokemon;
+
+})
+
+router.post('/addPokemon', async (ctx: RouterContext) => {
+    const body = await ctx.request.body().value;
+
+    let response = await fetch(`http://localhost:${PORT}/pokemon`);
+    let json = await response.json();
+
+    let receivedPokemon: Pokemon = {
+        _id: json["_id"],
+        name: json["name"],
+        height: json["height"],
+        weight: json["weight"],
+        types: json["types"],
+        front_sprite: json["front_sprite"],
+    }
+
+    const receivedUser = {
+        username: body.get('username'),
+        pokemon: receivedPokemon
+    }
+
+    const user = await users.findOne({ username : receivedUser["username"] })
+    if(user != null) {
+        user.pokedex.push(receivedUser.pokemon)
+        const { matchedCount, modifiedCount, upsertedId } = await users.updateOne(
+            { username : user.username },
+            { pokedex: user.pokedex }
+          )
+        ctx.response.type = "application/json";
+
+        ctx.response.body = user
+    } else {
+        const user = await users.insertOne({ 
+                username: receivedUser.username, 
+                pokedex: [receivedUser.pokemon]
+            })
+        ctx.response.type = "application/json";
+        
+        ctx.response.body = user
+    }
 
 })
 
