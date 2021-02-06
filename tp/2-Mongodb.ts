@@ -29,10 +29,19 @@ app.use(async (ctx) => {
 
 // UserShema est un DAO (Data Access Object) et corresponds à la 'table' USERS dans la BDD
 // Cela nous permet d'ajouter facilement des informations en base
-interface UserSchema{
+interface UserSchema {
     _id: { $oid: string }
     nickname: string,
     level: number,
+}
+
+interface Pokemon {
+    _id: number,
+    name: string,
+    height: number,
+    weight: number,
+    types: [string],
+    front_sprite: string,
 }
 
 router.get('/', (ctx: RouterContext) => {
@@ -64,7 +73,7 @@ router.post('/users', async (ctx: RouterContext) => {
 })
 
 const path = "https://pokeapi.co/api/v2/pokemon?limit=10"; 
-const pokeId_1 = Math.floor(Math.random() * 10) + 1;
+const pokeId_1 = Math.floor(Math.random() * 10) + 1; // !!!!!! à deplacer
 const pokeId_2 = Math.floor(Math.random() * 10) + 1;
 
 //On affiche une liste des 10 premiers pokémons avec la méthode fetch
@@ -90,7 +99,32 @@ router.get('/pokemons', async (ctx: RouterContext) => {
     let pokemonJson_2 = await pokemon_2.json();
     const ability_2 = pokemonJson_2.abilities[1].ability.name;
     console.log("Le pokemon " + pokemonName_2 + " utilise " + ability_2);
-}) 
+})
+
+
+// On récupère un pokemon au hasard
+router.get('/pokemon', async (ctx: RouterContext) => {
+
+    const randomPokemonId = Math.floor(Math.random() * 100) + 1;
+    const urlPokemon = "https://pokeapi.co/api/v2/pokemon/";
+    let response = await fetch(`${urlPokemon}${randomPokemonId}`);
+    
+    let json = await response.json();
+    console.log(json);
+
+    let pokemon: Pokemon = {
+        _id: json["id"],
+        name: json["name"],
+        height: json["height"],
+        weight: json["weight"],
+        types: json["types"],
+        front_sprite: json["sprites"]["front_default"],
+    }
+
+    ctx.response.type = "application/json";
+    ctx.response.body = pokemon;
+
+})
 
 console.log(`Listening on port ${PORT}`)
 await app.listen( { port: PORT });
