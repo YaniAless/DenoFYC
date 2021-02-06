@@ -23,7 +23,7 @@
           <td><%=pokemon.weight%></td>
           <td>
             <% pokemon.types.forEach(type => {%>
-              <%=type%><br />
+              <%=type.type.name%><br />
             <% })%>
           </td>
           <td><img src="<%=pokemon.front_sprite%>"></td>
