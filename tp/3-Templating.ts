@@ -14,15 +14,19 @@ const app = new Application();
 
 const ejsEngine = engineFactory.getEjsEngine();
 const oakAdapter = adapterFactory.getOakAdapter();
-app.use(viewEngine(oakAdapter, ejsEngine));
+app.use(viewEngine(oakAdapter, ejsEngine, {
+    viewExt: ".ejs",
+    viewEngine: ejsEngine,
+    viewRoot: `${Deno.cwd()}/tp/views`,
+}));
 
 // Déclaration de l'objet client Mongo qui nous permettra d'intéroger la BDD
 const client = new MongoClient();
-client.connectWithUri('mongodb://localhost:27017');
+//client.connectWithUri('mongodb://localhost:27017');
+client.connectWithUri('mongodb+srv://KalyDeno:DenoPwFYC2021@cluster0.vm5ok.mongodb.net/testApp?retryWrites=true&w=majority');
 
 const db = client.database('pokemon');
 const users = db.collection<UserSchema>('users');
-const pokemons = db.collection<Pokemon>('pokemons');
 
 app.use(router.routes());
 app.use(router.allowedMethods());
@@ -152,14 +156,14 @@ router.post('/addPokemon', async (ctx) => {
             { pokedex: user.pokedex }
           )
           ctx.response.type = "application/json";
-          //ctx.render("/saved_pokemon.ejs", {user: receivedUser.username, pokemon: receivedUser.pokemon});
+          ctx.render("saved_pokemon", {username: receivedUser.username, pokemon: receivedUser.pokemon});
     } else {
         const user = await users.insertOne({
                 username: receivedUser.username,
                 pokedex: [receivedUser.pokemon]
             })
         ctx.response.type = "application/json";
-        //ctx.render("/saved_pokemon.ejs", {user: receivedUser.username, pokemon: receivedUser.pokemon});
+        ctx.render("saved_pokemon", {username: receivedUser.username, pokemon: receivedUser.pokemon});
     }
 
 })
@@ -169,7 +173,7 @@ router.get('/pokedex/:name', async (ctx) => {
     console.log(user);
     if(user != null) {
         ctx.response.type = "application/json";
-        //ctx.render("/list_pokemon.ejs", {user: user.username, pokedex : user.pokedex})
+        ctx.render("list_pokemon", {user: user.username, pokedex : user.pokedex})
     }
 })
 
