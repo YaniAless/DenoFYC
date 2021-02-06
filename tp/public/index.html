@@ -6,28 +6,11 @@
 </head>
 <body onload="fetchUsers()">
     <form action="/addPokemon" method="POST">
-        <label>Username</label><input name="username" type="text"/>
-        
-        <button type="submit">Add a pokemon</button>
+        <label>Username</label> <input name="username" type="text"/><br><br> 
+        <button type="submit">Search for pokemons !</button>
     </form>
     <br>
     <h2>Welcome to this deno course</h2>
     <img src="./img/Deno.svg" width="100" height="100"/>
-    <h2>Users list</h2>
-    <ul id="userList">
-
-    </ul>
 </body>
-<script>
-    var userList = document.getElementById('userList');
-    async function fetchUsers() {
-        let res = await fetch('http://localhost:4000/users');
-        let users = await res.json();
-        users.forEach(user => {
-            let u = document.createElement('li');
-            u.appendChild(document.createTextNode("Nick Name : " + user['nickname'] + " Level : " + user['level']));
-            userList.appendChild(u);
-        });
-    }
-</script>
 </html>
