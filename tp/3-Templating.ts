@@ -23,7 +23,7 @@ app.use(viewEngine(oakAdapter, ejsEngine, {
 // Déclaration de l'objet client Mongo qui nous permettra d'intéroger la BDD
 const client = new MongoClient();
 //client.connectWithUri('mongodb://localhost:27017');
-client.connectWithUri('mongodb+srv://KalyDeno:xwwjoo5ir7Ek3co4@cluster0.vm5ok.mongodb.net/testApp?retryWrites=true&w=majority');
+client.connectWithUri('mongodb+srv://KalyDeno:<password>@cluster0.vm5ok.mongodb.net/testApp?retryWrites=true&w=majority');
 
 const db = client.database('pokemon');
 const users = db.collection<UserSchema>('users');
