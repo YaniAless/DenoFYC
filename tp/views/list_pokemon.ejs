@@ -15,20 +15,20 @@
         <th>types</th>
         <th>sprite</th>
       </tr>
-      <%=data.pokedex.forEach(pokemon => {%>
+      <% pokedex.forEach(pokemon => {%>
         <tr>
           <td><%=pokemon._id%></td>
           <td><%=pokemon.name%></td>
           <td><%=pokemon.height%></td>
           <td><%=pokemon.weight%></td>
           <td>
-            <%=pokemon.types.forEach(type => {%>
+            <% pokemon.types.forEach(type => {%>
               <%=type%><br />
-            <%=})%>
+            <% })%>
           </td>
           <td><img src="<%=pokemon.front_sprite%>"></td>
         </tr>
-      <%=})%>
+      <% })%>
     </table>
 </body>
 </html>
