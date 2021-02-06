@@ -1,0 +1,34 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome</title>
+</head>
+<body onload="fetchUsers()">
+    <form action="/users" method="POST">
+        <label>NickName</label><input name="nickname" type="text"/>
+        <label>Level</label><input name="level" type="number"/>
+        
+        <button type="submit">Send</button>
+    </form>
+    <br>
+    <h2>Welcome to this deno course</h2>
+    <img src="./img/Deno.svg" width="100" height="100"/>
+    <h2>Users list</h2>
+    <ul id="userList">
+
+    </ul>
+</body>
+<script>
+    var userList = document.getElementById('userList');
+    async function fetchUsers() {
+        let res = await fetch('http://localhost:4000/users');
+        let users = await res.json();
+        users.forEach(user => {
+            let u = document.createElement('li');
+            u.appendChild(document.createTextNode("Nick Name : " + user['nickname'] + " Level : " + user['level']));
+            userList.appendChild(u);
+        });
+    }
+</script>
+</html>
