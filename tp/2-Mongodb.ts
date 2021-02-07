@@ -139,7 +139,7 @@ router.post('/addPokemon', async (ctx: RouterContext) => {
         user.pokedex.push(receivedUser.pokemon)
         const { matchedCount, modifiedCount, upsertedId } = await users.updateOne(
             { username : user.username },
-            { pokedex: user.pokedex }
+            { $set: { pokedex: user.pokedex } }
           )
         ctx.response.type = "application/json";
 
